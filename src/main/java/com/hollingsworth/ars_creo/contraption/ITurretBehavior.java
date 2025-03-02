@@ -7,6 +7,7 @@ import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
+import com.hollingsworth.arsnouveau.common.util.ANCodecs;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,7 +29,7 @@ public interface ITurretBehavior {
         Direction direction = context.state.getValue(BasicSpellTurret.FACING);
         FakePlayer fakePlayer = ANFakePlayer.getPlayer(world);
         fakePlayer.setPos(pos.getX(), pos.getY(), pos.getZ());
-        SpellCaster spellCaster = new SpellCaster();// new TurretSpellCaster(context.blockEntityData);
+        SpellCaster spellCaster = ANCodecs.decode(SpellCaster.CODEC.codec(), context.blockEntityData.get("spell_caster"));
         Spell spell = spellCaster.getSpell();
         if(!spell.isValid()){
             return;

@@ -59,11 +59,11 @@ public class ContraptionUtils {
 
     public static int getFillState(int source){
         int fillState = 0;
-        if (source > 0 && source < 1000) {
+        if (source > 0 && source < 1000)
             fillState = 1;
-        } else if (source != 0) {
-            fillState = source / 1000 + 1;
+        else if (source != 0) {
+            fillState = (source / 1000) + 1;
         }
-        return fillState;
+        return Math.min(fillState, 11);
     }
 }
