@@ -34,12 +34,9 @@ public class SourceInfo {
     }
 
     public void removeWithUpdate(Level level, int amount, AbstractContraptionEntity entity){
-        int currentFillState = getFillState(this.getAmount());
         this.removeAmount(amount);
         int nextFillState = getFillState(this.amount);
-
-            ACNetworking.sendToNearby(level, blockInfo.pos(), new PacketUpdateJarContraption(entity.getId(), blockInfo.pos(), blockInfo.nbt(), nextFillState));
-
+        ACNetworking.sendToNearbyClient(level, blockInfo.pos(), new PacketUpdateJarContraption(entity.getId(), blockInfo.pos(), blockInfo.nbt(), nextFillState));
     }
 
     public void addWithUpdate(Level level, int amount, AbstractContraptionEntity entity){
@@ -47,7 +44,7 @@ public class SourceInfo {
         this.addAmount(amount);
         int nextFillState = getFillState(this.amount);
         if(currentFillState != nextFillState) {
-            ACNetworking.sendToNearby(level, blockInfo.pos(), new PacketUpdateJarContraption(entity.getId(), blockInfo.pos(), blockInfo.nbt(), nextFillState));
+            ACNetworking.sendToNearbyClient(level, blockInfo.pos(), new PacketUpdateJarContraption(entity.getId(), blockInfo.pos(), blockInfo.nbt(), nextFillState));
         }
     }
 }

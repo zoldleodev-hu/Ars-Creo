@@ -42,6 +42,10 @@ repositories {
         name = "Illusive Soulworks maven"
         url = "https://maven.theillusivec4.top/"
     }
+    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
+    maven { url = "https://maven.saps.dev/releases" } // FTB Mods
+    maven { url = "https://maven.architectury.dev" } // Arch API
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven" } // NeoForge config api port, needed by ponder
     exclusiveContent {
         forRepository {
             maven {
@@ -100,7 +104,7 @@ neoForge {
 
         data {
             data()
-            programArguments.addAll("--all", "--mod", "ars_caelum", "--existing-mod", "ars_nouveau", "--existing", file("src/main/resources").absolutePath, "--output", file("src/generated/resources").absolutePath)
+            programArguments.addAll("--all", "--mod", "ars_creo", "--existing-mod", "ars_nouveau", "--existing", file("src/main/resources").absolutePath, "--output", file("src/generated/resources").absolutePath)
         }
 
         configureEach {
@@ -136,10 +140,11 @@ dependencies {
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}+1.21"
     implementation "com.simibubi.create:create-1.21.1:6.0.0-6"
 
-    compileOnly("dev.engine-room.flywheel:flywheel-forge-api-${flywheel_minecraft_version}:${flywheel_version}")
-    runtimeOnly("dev.engine-room.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
-    runtimeOnly("dev.engine-room.vanillin:vanillin-forge-${flywheel_minecraft_version}:${vanillin_version}")
+    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${flywheel_minecraft_version}:${flywheel_version}")
+    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${flywheel_minecraft_version}:${flywheel_version}")
+    runtimeOnly("dev.engine-room.vanillin:vanillin-neoforge-${flywheel_minecraft_version}:${vanillin_version}")
     implementation("net.createmod.ponder:Ponder-NeoForge-${mc_version}:${ponder_version}")
+
 }
 
 jar {
@@ -152,7 +157,7 @@ jar {
                 "Implementation-Version": mod_version,
                 "Implementation-Vendor" :"baileyh",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "ars_caelum.mixins.json"
+                "MixinConfigs": "ars_creo.mixins.json"
         ])
     }
 }

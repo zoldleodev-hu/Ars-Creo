@@ -13,7 +13,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -25,16 +24,15 @@ public class ArsCreo
 
     public ArsCreo(IEventBus modBus, ModContainer modContainer) {
         ArsNouveauRegistry.registerGlyphs();
-        CreateCompat.setup();
         modContainer.registerConfig(ModConfig.Type.COMMON, CreoConfig.SERVER_CONFIG);
         modBus.addListener(ACNetworking::register);
         modBus.addListener(this::clientSetup);
-        NeoForge.EVENT_BUS.register(this);
-        registers(modBus);
         modBus.addListener(ArsCreo::registerEvents);
+        registers(modBus);
     }
 
     public static void registers(IEventBus event) {
+        ModBlockRegistry.ITEMS.register(event);
         ModBlockRegistry.BLOCK_REG.register(event);
         ModBlockRegistry.BLOCK_ENTITY_REG.register(event);
         CreativeTabRegistry.TABS.register(event);

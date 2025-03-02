@@ -14,7 +14,7 @@ import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.GeoModel;
 
-public class CarbuncleWheelModel extends GeoModel<StarbuncleWheelTile> {
+public class StarbuncleWheelModel extends GeoModel<StarbuncleWheelTile> {
 
     @Override
     public void setCustomAnimations(StarbuncleWheelTile entity, long uniqueID, AnimationState<StarbuncleWheelTile> customPredicate) {

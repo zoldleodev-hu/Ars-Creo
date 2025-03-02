@@ -2,7 +2,7 @@ package com.hollingsworth.ars_creo.common.registry;
 
 import com.hollingsworth.ars_creo.ArsCreo;
 import com.hollingsworth.ars_creo.CreateCompat;
-import com.hollingsworth.ars_creo.client.render.CarbuncleWheelRenderer;
+import com.hollingsworth.ars_creo.client.render.StarbuncleWheelRenderer;
 import com.hollingsworth.ars_creo.common.block.StarbuncleWheelBlock;
 import com.hollingsworth.ars_creo.common.block.StarbuncleWheelTile;
 import com.hollingsworth.ars_creo.common.lib.LibBlock;
@@ -34,7 +34,7 @@ public class ModBlockRegistry {
         ITEMS.register(LibBlock.STARBUNCLE_WHEEL, () -> new RendererBlockItem(ModBlockRegistry.STARBY_WHEEL.get(), ItemsRegistry.defaultItemProperties()) {
             @Override
             public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
-                return CarbuncleWheelRenderer::getISTER;
+                return StarbuncleWheelRenderer::getISTER;
             }
         });
         CreateCompat.setup();

@@ -1,10 +1,7 @@
 package com.hollingsworth.ars_creo.contraption;
 
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
-import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
-import com.hollingsworth.arsnouveau.api.spell.Spell;
-import com.hollingsworth.arsnouveau.api.spell.SpellContext;
-import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
@@ -31,7 +28,7 @@ public interface ITurretBehavior {
         Direction direction = context.state.getValue(BasicSpellTurret.FACING);
         FakePlayer fakePlayer = ANFakePlayer.getPlayer(world);
         fakePlayer.setPos(pos.getX(), pos.getY(), pos.getZ());
-        TurretSpellCaster spellCaster = new TurretSpellCaster(context.blockEntityData);
+        SpellCaster spellCaster = new SpellCaster();// new TurretSpellCaster(context.blockEntityData);
         Spell spell = spellCaster.getSpell();
         if(!spell.isValid()){
             return;
@@ -39,7 +36,7 @@ public interface ITurretBehavior {
         EntitySpellResolver resolver = new EntitySpellResolver((new SpellContext(world, spell, fakePlayer, new ContraptionCaster(context.contraption.entity))));
         if(!ContraptionUtils.removeSourceFromContraption(context, spell.getCost(), pos)) {
             boolean hasNearby = SourceUtil.hasSourceNearby(pos, world, 6, spell.getCost());
-            if(!hasNearby || SourceUtil.takeSourceWithParticles(pos, world, 6, spell.getCost()) == null){
+            if(!hasNearby || SourceUtil.takeSourceMultipleWithParticles(pos, world, 6, spell.getCost()) == null){
                 return;
             }
         }
@@ -90,6 +87,6 @@ public interface ITurretBehavior {
         double d0 = pos.getX() + 0.5D * (double)direction.getStepX();
         double d1 = pos.getY() + 0.5D * (double)direction.getStepY();
         double d2 = pos.getZ() + 0.5D * (double)direction.getStepZ();
-        return new PositionImpl(d0, d1, d2);
+        return new Vec3(d0, d1, d2);
     }
 }

@@ -3,12 +3,10 @@ package com.hollingsworth.ars_creo.network;
 import com.hollingsworth.ars_creo.ArsCreo;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.block.SourceJar;
-
 import com.hollingsworth.arsnouveau.common.network.AbstractPacket;
-import com.hollingsworth.arsnouveau.common.network.PacketAddFadingLight;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
-
+import com.simibubi.create.content.contraptions.render.ContraptionRenderInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -62,7 +60,7 @@ public class PacketUpdateJarContraption extends AbstractPacket {
         if(entity instanceof AbstractContraptionEntity contraption){
             contraption.getContraption().getBlocks().put(structurePos,
                     new StructureTemplate.StructureBlockInfo(structurePos, BlockRegistry.SOURCE_JAR.defaultBlockState().setValue(SourceJar.fill, fillLevel), structureTag));
-            ContraptionRenderDispatcher.invalidate(contraption.getContraption());
+            ContraptionRenderInfo.invalidate(contraption.getContraption());
         }
     }
 }
