@@ -15,6 +15,7 @@ public class ContraptionCaster implements IWrappedCaster {
 
     AbstractContraptionEntity contraption;
     List<FilterableItemHandler> itemHandlers;
+
     public ContraptionCaster(AbstractContraptionEntity contraption){
         this.contraption = contraption;
         itemHandlers = new ArrayList<>();

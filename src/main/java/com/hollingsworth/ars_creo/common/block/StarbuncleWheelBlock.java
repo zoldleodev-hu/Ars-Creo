@@ -4,7 +4,7 @@ import com.hollingsworth.ars_creo.common.registry.ModBlockRegistry;
 
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import net.createmod.catnip.levelWrappers.WrappedLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -54,7 +54,7 @@ public class StarbuncleWheelBlock extends DirectionalKineticBlock implements IBE
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
                                   BlockPos currentPos, BlockPos facingPos) {
-        if (worldIn instanceof WrappedWorld)
+        if (worldIn instanceof WrappedLevel)
             return stateIn;
 
         updateWheelSpeed(worldIn, currentPos);

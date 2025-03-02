@@ -1,12 +1,11 @@
 package com.hollingsworth.ars_creo.contraption;
 
 
-import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
+import com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour;
+import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 
-public class AbstractTurretBehavior implements ITurretBehavior, MovementBehaviour {
+public class AbstractTurretBehavior extends MovingInteractionBehaviour implements ITurretBehavior, MovementBehaviour {
 
-    @Override
-    public boolean renderAsNormalBlockEntity() {
-        return true;
-    }
+
+
 }

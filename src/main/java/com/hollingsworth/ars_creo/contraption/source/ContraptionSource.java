@@ -37,9 +37,6 @@ public class ContraptionSource implements ISourceTile{
     }
 
     @Override
-    public void setMaxSource(int max) {}
-
-    @Override
     public int setSource(int source) {
         if(source > getSource()){
             this.addSource(source - getSource());

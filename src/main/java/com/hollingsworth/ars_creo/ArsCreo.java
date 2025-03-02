@@ -5,20 +5,16 @@ import com.hollingsworth.ars_creo.client.render.ClientHandler;
 import com.hollingsworth.ars_creo.common.registry.CreativeTabRegistry;
 import com.hollingsworth.ars_creo.common.registry.ModBlockRegistry;
 import com.hollingsworth.ars_creo.network.ACNetworking;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegisterEvent;
-
-import java.util.Objects;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ArsCreo.MODID)
@@ -27,16 +23,15 @@ public class ArsCreo
 
     public static final String MODID = "ars_creo";
 
-    public ArsCreo() {
+    public ArsCreo(IEventBus modBus, ModContainer modContainer) {
         ArsNouveauRegistry.registerGlyphs();
         CreateCompat.setup();
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CreoConfig.SERVER_CONFIG);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-        MinecraftForge.EVENT_BUS.register(this);
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        registers(modEventBus);
-        modEventBus.addListener(ArsCreo::registerEvents);
+        modContainer.registerConfig(ModConfig.Type.COMMON, CreoConfig.SERVER_CONFIG);
+        modBus.addListener(ACNetworking::register);
+        modBus.addListener(this::clientSetup);
+        NeoForge.EVENT_BUS.register(this);
+        registers(modBus);
+        modBus.addListener(ArsCreo::registerEvents);
     }
 
     public static void registers(IEventBus event) {
@@ -46,19 +41,15 @@ public class ArsCreo
     }
 
     public static void registerEvents(RegisterEvent event) {
-        if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)) {
-            IForgeRegistry<Item> registry = Objects.requireNonNull(event.getForgeRegistry());
-            ModBlockRegistry.onBlockItemsRegistry(registry);
-        }
+        event.register(Registries.ITEM, helper ->{
+            ModBlockRegistry.onBlockItemsRegistry();
+        });
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
-        ACNetworking.registerMessages();
+    public static ResourceLocation prefix(String path){
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
-
-
     public void clientSetup(final FMLClientSetupEvent event) {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::init);
+        ModLoadingContext.get().getActiveContainer().getEventBus().addListener(ClientHandler::init);
     }
 }
