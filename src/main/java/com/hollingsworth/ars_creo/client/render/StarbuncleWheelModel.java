@@ -43,7 +43,7 @@ public class StarbuncleWheelModel extends GeoModel<StarbuncleWheelTile> {
         return offset;
     }
     static final ResourceLocation model = ResourceLocation.fromNamespaceAndPath(ArsCreo.MODID, "geo/starbuncle_wheel.geo.json");
-    static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(ArsCreo.MODID, "textures/blocks/starbuncle_wheel.png");
+    static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(ArsCreo.MODID, "textures/block/starbuncle_wheel.png");
     static final ResourceLocation animations = ResourceLocation.fromNamespaceAndPath(ArsCreo.MODID, "animations/starbuncle_wheel_animation.json");
 
     @Override
