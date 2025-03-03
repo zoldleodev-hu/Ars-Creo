@@ -1,18 +1,14 @@
 package com.hollingsworth.ars_creo;
 
-import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.hollingsworth.ars_creo.common.registry.ModBlockRegistry;
+import com.hollingsworth.arsnouveau.api.documentation.ReloadDocumentationEvent;
+import com.hollingsworth.arsnouveau.api.documentation.builder.DocEntryBuilder;
+import com.hollingsworth.arsnouveau.api.registry.DocumentationRegistry;
 
 public class ArsNouveauRegistry {
-    public static List<AbstractSpellPart> registeredSpells = new ArrayList<>();
-
-    public static void registerGlyphs(){
-
-    }
-
-    public static void register(AbstractSpellPart spellPart){
-
+    public static void registerDocumentation(ReloadDocumentationEvent event){
+        DocumentationRegistry.registerEntry(DocumentationRegistry.CRAFTING, new DocEntryBuilder(ArsCreo.MODID, DocumentationRegistry.CRAFTING, ModBlockRegistry.STARBY_WHEEL.get().asItem())
+                .withIntroPage()
+                .withCraftingPages(ModBlockRegistry.STARBY_WHEEL.get()).build());
     }
 }

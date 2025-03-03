@@ -34,7 +34,7 @@ public interface ITurretBehavior {
         if(!spell.isValid()){
             return;
         }
-        EntitySpellResolver resolver = new EntitySpellResolver((new SpellContext(world, spell, fakePlayer, new ContraptionCaster(context.contraption.entity))));
+        EntitySpellResolver resolver = new EntitySpellResolver((new SpellContext(world, spell, fakePlayer, new ContraptionCaster(context, context.contraption.entity))));
         if(!ContraptionUtils.removeSourceFromContraption(context, spell.getCost(), pos)) {
             boolean hasNearby = SourceUtil.hasSourceNearby(pos, world, 6, spell.getCost());
             if(!hasNearby || SourceUtil.takeSourceMultipleWithParticles(pos, world, 6, spell.getCost()) == null){
