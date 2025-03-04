@@ -22,8 +22,8 @@ authors="Bailey" #optional
 # A multi-line description for your mod. This has no minimum length, but it *is* required!
 description = '''A create addon for Ars Nouveau'''
 
-#[[mixins]]
-#config="ars_creo.mixins.json"
+[[mixins]]
+config="ars_creo.mixins.json"
 
 [[dependencies.ars_creo]]
 modId="neoforge"
