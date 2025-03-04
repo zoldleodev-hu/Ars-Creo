@@ -1,12 +1,9 @@
 package com.hollingsworth.ars_creo.common.display;
 
 import com.hollingsworth.arsnouveau.common.block.tile.BasicSpellTurretTile;
+import com.simibubi.create.api.behaviour.display.DisplaySource;
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
-import com.simibubi.create.content.redstone.displayLink.source.DisplaySource;
 import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
-import net.minecraft.Optionull;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -33,7 +30,7 @@ public class TurretDisplaySource extends DisplaySource {
                 return reduce.orElse(EMPTY_LINE);
             });
 
-            return List.of(componentList.reduce((comp1, comp2) -> comp1.append(Components.literal("\n"))
+            return List.of(componentList.reduce((comp1, comp2) -> comp1.append(Component.literal("\n"))
                             .append(comp2))
                     .orElse(EMPTY_LINE));
         }

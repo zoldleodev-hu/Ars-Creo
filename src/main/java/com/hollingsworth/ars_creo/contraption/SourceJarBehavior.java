@@ -3,16 +3,11 @@ package com.hollingsworth.ars_creo.contraption;
 import com.hollingsworth.ars_creo.contraption.source.ContraptionSourceProvider;
 import com.hollingsworth.arsnouveau.api.source.ISpecialSourceProvider;
 import com.hollingsworth.arsnouveau.api.source.SourceManager;
-import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
+import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 
 
 public class SourceJarBehavior implements MovementBehaviour {
-
-    @Override
-    public boolean renderAsNormalBlockEntity() {
-        return true;
-    }
 
     @Override
     public void startMoving(MovementContext context) {

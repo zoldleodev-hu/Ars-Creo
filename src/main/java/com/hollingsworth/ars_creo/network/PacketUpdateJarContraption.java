@@ -5,7 +5,6 @@ import com.hollingsworth.arsnouveau.common.block.SourceJar;
 
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
-import com.simibubi.create.content.contraptions.render.ContraptionRenderDispatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -48,7 +47,7 @@ public class PacketUpdateJarContraption {
             if(entity instanceof AbstractContraptionEntity contraption){
                 contraption.getContraption().getBlocks().put(structurePos,
                         new StructureTemplate.StructureBlockInfo(structurePos, BlockRegistry.SOURCE_JAR.defaultBlockState().setValue(SourceJar.fill, fillLevel), structureTag));
-                ContraptionRenderDispatcher.invalidate(contraption.getContraption());
+//                ContraptionRenderDispatcher.invalidate(contraption.getContraption());
             }
         });
         ((NetworkEvent.Context)ctx.get()).setPacketHandled(true);

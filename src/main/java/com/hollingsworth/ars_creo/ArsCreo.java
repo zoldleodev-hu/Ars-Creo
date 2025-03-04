@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -29,7 +30,6 @@ public class ArsCreo
 
     public ArsCreo() {
         ArsNouveauRegistry.registerGlyphs();
-        CreateCompat.setup();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CreoConfig.SERVER_CONFIG);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
@@ -49,6 +49,10 @@ public class ArsCreo
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)) {
             IForgeRegistry<Item> registry = Objects.requireNonNull(event.getForgeRegistry());
             ModBlockRegistry.onBlockItemsRegistry(registry);
+
+        }
+        if(event.getRegistryKey().equals(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES)){
+            CreateCompat.setup();
         }
     }
 
@@ -57,6 +61,9 @@ public class ArsCreo
         ACNetworking.registerMessages();
     }
 
+    private void postSetup(final FMLLoadCompleteEvent event){
+        CreateCompat.setup();
+    }
 
     public void clientSetup(final FMLClientSetupEvent event) {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::init);

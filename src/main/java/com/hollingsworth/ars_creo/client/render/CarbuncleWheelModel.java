@@ -5,8 +5,9 @@ import com.hollingsworth.ars_creo.common.block.StarbuncleWheelBlock;
 import com.hollingsworth.ars_creo.common.block.StarbuncleWheelTile;
 import com.hollingsworth.ars_creo.common.registry.ModBlockRegistry;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+
 import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import net.createmod.catnip.animation.AnimationTickHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

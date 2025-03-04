@@ -18,7 +18,7 @@ public class ContraptionCaster implements IWrappedCaster {
     public ContraptionCaster(AbstractContraptionEntity contraption){
         this.contraption = contraption;
         itemHandlers = new ArrayList<>();
-        itemHandlers.add(new FilterableItemHandler(contraption.getContraption().getSharedInventory()));
+        itemHandlers.add(new FilterableItemHandler(contraption.getContraption().getStorage().getAllItems()));
     }
 
     @Override
