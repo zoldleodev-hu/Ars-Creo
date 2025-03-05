@@ -67,10 +67,6 @@ public class ArsCreo
         ACNetworking.registerMessages();
     }
 
-    private void postSetup(final FMLLoadCompleteEvent event){
-        CreateCompat.setup();
-    }
-
     public void clientSetup(final FMLClientSetupEvent event) {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::init);
     }

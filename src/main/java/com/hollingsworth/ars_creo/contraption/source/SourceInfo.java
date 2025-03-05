@@ -2,8 +2,12 @@ package com.hollingsworth.ars_creo.contraption.source;
 
 import com.hollingsworth.ars_creo.network.ACNetworking;
 import com.hollingsworth.ars_creo.network.PacketUpdateJarContraption;
+import com.hollingsworth.arsnouveau.common.block.SourceJar;
 import com.hollingsworth.arsnouveau.common.block.tile.SourceJarTile;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
@@ -37,9 +41,9 @@ public class SourceInfo {
         int currentFillState = getFillState(this.getAmount());
         this.removeAmount(amount);
         int nextFillState = getFillState(this.amount);
-
-            ACNetworking.sendToNearby(level, blockInfo.pos(), new PacketUpdateJarContraption(entity.getId(), blockInfo.pos(), blockInfo.nbt(), nextFillState));
-
+        if(currentFillState != nextFillState) {
+            syncSource(entity, nextFillState);
+        }
     }
 
     public void addWithUpdate(Level level, int amount, AbstractContraptionEntity entity){
@@ -47,7 +51,13 @@ public class SourceInfo {
         this.addAmount(amount);
         int nextFillState = getFillState(this.amount);
         if(currentFillState != nextFillState) {
-            ACNetworking.sendToNearby(level, blockInfo.pos(), new PacketUpdateJarContraption(entity.getId(), blockInfo.pos(), blockInfo.nbt(), nextFillState));
+            syncSource(entity, nextFillState);
         }
+    }
+
+    public void syncSource(AbstractContraptionEntity contraption, int nextFillState){
+        BlockPos structurePos = blockInfo.pos();
+        CompoundTag structureTag = blockInfo.nbt();
+        contraption.setBlock(structurePos,  new StructureTemplate.StructureBlockInfo(structurePos, BlockRegistry.SOURCE_JAR.defaultBlockState().setValue(SourceJar.fill, nextFillState), structureTag));
     }
 }
