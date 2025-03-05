@@ -19,7 +19,7 @@ import java.util.List;
 
 
 public class CreateCompat {
-    public static final DeferredRegister<DisplaySource> DISPLAY_SOURCES = DeferredRegister.create(CreateRegistries.DISPLAY_SOURCE, ArsC.MODID);
+    public static final DeferredRegister<DisplaySource> DISPLAY_SOURCES = DeferredRegister.create(CreateRegistries.DISPLAY_SOURCE, ArsCreo.MODID);
 
     public static final DeferredHolder<DisplaySource, DisplaySource> TURRET_DISPLAY_SOURCE = DISPLAY_SOURCES.register("turret", TurretDisplaySource::new);
     public static final  DeferredHolder<DisplaySource, DisplaySource> JAR_DISPLAY_SOURCE = DISPLAY_SOURCES.register("source_jar", SourceJarDisplaySource::new);

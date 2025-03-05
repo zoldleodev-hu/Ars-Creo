@@ -45,6 +45,7 @@ repositories {
     maven { url = "https://mvn.devos.one/snapshots" } // Registrate
     maven { url = "https://maven.saps.dev/releases" } // FTB Mods
     maven { url = "https://maven.architectury.dev" } // Arch API
+    maven { url = "https://maven.tterrag.com" } // Registrate
     maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven" } // NeoForge config api port, needed by ponder
     exclusiveContent {
         forRepository {
@@ -144,7 +145,7 @@ dependencies {
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${flywheel_minecraft_version}:${flywheel_version}")
     runtimeOnly("dev.engine-room.vanillin:vanillin-neoforge-${flywheel_minecraft_version}:${vanillin_version}")
     implementation("net.createmod.ponder:Ponder-NeoForge-${mc_version}:${ponder_version}")
-
+    implementation(jarJar("com.tterrag.registrate:Registrate:${registrate_version}"))
 }
 
 jar {

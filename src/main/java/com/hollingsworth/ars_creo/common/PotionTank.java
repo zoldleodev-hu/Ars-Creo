@@ -1,13 +1,14 @@
 package com.hollingsworth.ars_creo.common;
 
-import com.hollingsworth.arsnouveau.api.potion.PotionData;
 import com.hollingsworth.arsnouveau.common.block.tile.PotionJarTile;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.fluids.potion.PotionFluid;
 import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 
 public class PotionTank extends FluidTank {
@@ -23,17 +24,17 @@ public class PotionTank extends FluidTank {
 
     @Override
     public boolean isFluidValid(FluidStack stack) {
-        return super.isFluidValid(stack) && jar.canAccept(PotionData.fromTag(stack.getTag()), 1);
+        return super.isFluidValid(stack) && stack.has(DataComponents.POTION_CONTENTS) && jar.canAccept(stack.get(DataComponents.POTION_CONTENTS), 1);
     }
 
     @NotNull
     public FluidStack getFluid() {
-        return PotionFluidHandler.getFluidFromPotion(jar.getData().getPotion(), PotionFluid.BottleType.REGULAR, this.getFluidAmount());
+        return PotionFluidHandler.getFluidFromPotion(jar.getData(), PotionFluid.BottleType.REGULAR, this.getFluidAmount());
     }
 
     @Override
     public boolean isEmpty() {
-        return jar.getData().isEmpty();
+        return jar.getAmount() <= 0;
     }
 
     @Override
@@ -46,19 +47,22 @@ public class PotionTank extends FluidTank {
         if (resource.isEmpty() || !isFluidValid(resource)) {
             return 0;
         }
-        PotionData data = PotionData.fromTag(resource.getTag());
+        PotionContents data = resource.get(DataComponents.POTION_CONTENTS);
+
+        if (!jar.canAccept(data, resource.getAmount())) {
+            return 0;
+        }
 
         if (action.simulate()) {
-            if (jar.getData().isEmpty()) {
+
+            if (jar.getAmount() <= 0 ) {
                 return Math.min(capacity, resource.getAmount());
             }
-            if (!data.areSameEffects(jar.getData())) {
-                return 0;
-            }
+
             return Math.min(capacity - getFluidAmount(), resource.getAmount());
         }
 
-        if (jar.getData().isEmpty()) {
+        if (jar.getAmount() <= 0) {
 
             int amountToAdd = Mth.ceil(resource.getAmount() * MB_TO_POTION);
             if (amountToAdd > 0) {
@@ -68,9 +72,6 @@ public class PotionTank extends FluidTank {
             return 0;
         }
 
-        if (!data.areSameEffects(jar.getData())) {
-            return 0;
-        }
 
         int filled = capacity - getFluidAmount(); // room left
         int amountToAdd = Mth.ceil(resource.getAmount() * MB_TO_POTION);
@@ -93,7 +94,7 @@ public class PotionTank extends FluidTank {
             drained = getFluidAmount();
         }
 
-        FluidStack stack = PotionFluidHandler.getFluidFromPotion(jar.getData().getPotion(), PotionFluid.BottleType.REGULAR, drained);
+        FluidStack stack = PotionFluidHandler.getFluidFromPotion(jar.getData(), PotionFluid.BottleType.REGULAR, drained);
         if (action.execute() && drained > 0) {
             // Use the constant for conversion from drained MB to POTION
             jar.remove(Mth.ceil(drained * MB_TO_POTION));
