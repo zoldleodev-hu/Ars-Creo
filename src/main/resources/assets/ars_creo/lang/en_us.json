@@ -8,5 +8,9 @@
 	"ars_creo.display_source.turret.no_spell": "No Spell set.",
 	"ars_creo.display_source.turret.spell_name": "Spell: %s",
 	"ars_creo.display_source.turret.spell": "%s",
-	"ars_creo.display_source.turret_target": "Spell Turret"
+	"ars_creo.display_source.turret_target": "Spell Turret",
+	"ars_creo.display_source.source_count": "Source: %s",
+	"ars_creo.display_source.for_source_status": "for source status",
+	"ars_creo.display_source.source_jar": "Source Amount",
+	"ars_creo.display_source.turret": "Spell"
 }

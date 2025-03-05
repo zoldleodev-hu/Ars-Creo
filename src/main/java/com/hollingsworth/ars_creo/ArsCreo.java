@@ -5,6 +5,7 @@ import com.hollingsworth.ars_creo.client.render.ClientHandler;
 import com.hollingsworth.ars_creo.common.registry.CreativeTabRegistry;
 import com.hollingsworth.ars_creo.common.registry.ModBlockRegistry;
 import com.hollingsworth.ars_creo.network.ACNetworking;
+import com.simibubi.create.api.registry.CreateRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -43,6 +44,7 @@ public class ArsCreo
         ModBlockRegistry.BLOCK_REG.register(event);
         ModBlockRegistry.BLOCK_ENTITY_REG.register(event);
         CreativeTabRegistry.TABS.register(event);
+        CreateCompat.DISPLAY_SOURCES.register(event);
     }
 
     public static void registerEvents(RegisterEvent event) {
@@ -53,6 +55,10 @@ public class ArsCreo
         }
         if(event.getRegistryKey().equals(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES)){
             CreateCompat.setup();
+        }
+
+        if(event.getRegistryKey().equals(CreateRegistries.DISPLAY_SOURCE)){
+            CreateCompat.setupDisplayBehaviors();
         }
     }
 
