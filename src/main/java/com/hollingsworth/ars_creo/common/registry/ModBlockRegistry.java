@@ -8,6 +8,10 @@ import com.hollingsworth.ars_creo.common.block.StarbuncleWheelTile;
 import com.hollingsworth.ars_creo.common.lib.LibBlock;
 import com.hollingsworth.arsnouveau.common.items.RendererBlockItem;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipModifier;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -30,14 +34,18 @@ public class ModBlockRegistry {
     public static DeferredHolder<Block, StarbuncleWheelBlock> STARBY_WHEEL = BLOCK_REG.register(LibBlock.STARBUNCLE_WHEEL, () -> new StarbuncleWheelBlock(defaultProperties().noOcclusion().lightLevel((state) -> 10)));
     public static DeferredHolder<BlockEntityType<?>, BlockEntityType<StarbuncleWheelTile>> STARBY_TILE = BLOCK_ENTITY_REG.register(LibBlock.STARBUNCLE_WHEEL, () -> BlockEntityType.Builder.of(StarbuncleWheelTile::new, STARBY_WHEEL.get()).build(null));
 
+
     public static void onBlockItemsRegistry() {
-        ITEMS.register(LibBlock.STARBUNCLE_WHEEL, () -> new RendererBlockItem(ModBlockRegistry.STARBY_WHEEL.get(), ItemsRegistry.defaultItemProperties()) {
+        var starbyWheel = ITEMS.register(LibBlock.STARBUNCLE_WHEEL, () -> new RendererBlockItem(ModBlockRegistry.STARBY_WHEEL.get(), ItemsRegistry.defaultItemProperties()) {
             @Override
             public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
                 return StarbuncleWheelRenderer::getISTER;
             }
         });
         CreateCompat.setup();
+
+        TooltipModifier.REGISTRY.register(starbyWheel.get(), KineticStats.create(starbyWheel.get()));
+
     }
 
     public static Block.Properties defaultProperties(){
