@@ -45,20 +45,6 @@ Adds compatibility between Ars Nouveau and Create
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
-# Here's another dependency
-[[dependencies.ars_creo]]
-    modId="patchouli"
-    mandatory=true
-    versionRange="[1.19.2-77,)"
-    ordering="AFTER"
-    side="BOTH"
-
-[[dependencies.ars_creo]]
-    modId="curios"
-    mandatory=true
-    versionRange="[1.19.2-5.1.1.0,)"
-    ordering="AFTER"
-    side="BOTH"
 
 [[dependencies.ars_creo]]
     modId="ars_nouveau"
@@ -69,6 +55,6 @@ Adds compatibility between Ars Nouveau and Create
 [[dependencies.ars_creo]]
     modId="create"
     mandatory=true
-    versionRange="[0.5.1,)"
+    versionRange="[6,)"
     ordering="AFTER"
     side="BOTH"

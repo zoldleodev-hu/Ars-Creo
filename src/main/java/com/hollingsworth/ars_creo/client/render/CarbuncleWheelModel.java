@@ -44,7 +44,7 @@ public class CarbuncleWheelModel extends GeoModel<StarbuncleWheelTile> {
         return offset;
     }
     static final ResourceLocation model = new ResourceLocation(ArsCreo.MODID, "geo/starbuncle_wheel.geo.json");
-    static final ResourceLocation texture = new ResourceLocation(ArsCreo.MODID, "textures/blocks/starbuncle_wheel.png");
+    static final ResourceLocation texture = new ResourceLocation(ArsCreo.MODID, "textures/block/starbuncle_wheel.png");
     static final ResourceLocation animations = new ResourceLocation(ArsCreo.MODID, "animations/starbuncle_wheel_animation.json");
 
     @Override
