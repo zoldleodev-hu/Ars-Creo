@@ -12,6 +12,10 @@
 	"ars_creo.display_source.source_count": "Source: %s",
 	"ars_creo.display_source.for_source_status": "for source status",
 	"ars_creo.display_source.source_jar": "Source Amount",
-	"ars_creo.display_source.turret": "Spell"
+	"ars_creo.display_source.turret": "Spell",
+	"ars_creo.page1.ars_creo.display_link": "The display link can be attached to a Source Jar to display the amount of source in a jar, or to a spell turret to display the current spell onto a Display Board.",
+	"ars_creo.page1.ars_creo.fluid_tank": "Potions can be stored into and transferred between a Create fluid tank using pipes and a tank.",
+	"ars_creo.display_link": "Ars Creo: Display Link",
+	"ars_creo.fluid_tank": "Ars Creo: Fluid Tank"
 
 }
