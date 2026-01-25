@@ -1,13 +1,11 @@
 package com.hollingsworth.ars_creo.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.equipment.hats.EntityHats;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
@@ -17,7 +15,17 @@ import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.util.RenderUtil;
 
 public class GeoTrainHatRenderer {
-    public static void render(Vector3f hatScale, Vector3f hatTranslation, PoseStack poseStack, LivingEntity animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+
+    public static void render(PoseStack poseStack, LivingEntity animatable, GeoBone bone, MultiBufferSource bufferSource, int packedLight){
+        TrainHatMap.TrainData data = TrainHatMap.get(animatable.getType());
+        if(data == null)
+            return;
+        if(animatable instanceof LivingEntity livingEntity && bone.getName().equals(data.bone())) {
+            GeoTrainHatRenderer.render(data.hatScale(), data.hatTranslation(), poseStack, livingEntity, bone, bufferSource, packedLight);
+        }
+    }
+
+    public static void render(Vector3f hatScale, Vector3f hatTranslation, PoseStack poseStack, LivingEntity animatable, GeoBone bone, MultiBufferSource bufferSource, int packedLight) {
         PartialModel hat = EntityHats.getHatFor(animatable);
         if (hat == null) {
             return;

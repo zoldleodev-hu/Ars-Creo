@@ -49,5 +49,5 @@ side="BOTH"
 [[dependencies.ars_creo]]
 modId="create"
 mandatory=true
-versionRange="[0.5.1,)"
+versionRange="[6.0.9,)"
 ordering="AFTER"

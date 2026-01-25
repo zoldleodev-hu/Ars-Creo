@@ -6,7 +6,6 @@ import com.hollingsworth.arsnouveau.common.block.SourceJar;
 import com.hollingsworth.arsnouveau.common.network.AbstractPacket;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
-import com.simibubi.create.content.contraptions.render.ContraptionRenderInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -42,13 +41,6 @@ public class PacketUpdateJarContraption extends AbstractPacket {
         buf.writeInt(entityID);
     }
 
-    public PacketUpdateJarContraption(int entityId, BlockPos structurePos, CompoundTag tag, int fillLevel) {
-        this.entityID = entityId;
-        this.structurePos = structurePos;
-        this.structureTag = tag;
-        this.fillLevel = fillLevel;
-    }
-
     @Override
     public Type<? extends CustomPacketPayload> type() {
         return TYPE;
@@ -60,7 +52,7 @@ public class PacketUpdateJarContraption extends AbstractPacket {
         if(entity instanceof AbstractContraptionEntity contraption){
             contraption.getContraption().getBlocks().put(structurePos,
                     new StructureTemplate.StructureBlockInfo(structurePos, BlockRegistry.SOURCE_JAR.defaultBlockState().setValue(SourceJar.fill, fillLevel), structureTag));
-            ContraptionRenderInfo.invalidate(contraption.getContraption());
+            contraption.getContraption().invalidateClientContraptionStructure();
         }
     }
 }
