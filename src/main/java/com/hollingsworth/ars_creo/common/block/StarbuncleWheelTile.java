@@ -16,8 +16,9 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-
 public class StarbuncleWheelTile extends GeneratingKineticBlockEntity implements GeoBlockEntity {
+    @SuppressWarnings("all")
+    private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public StarbuncleWheelTile(BlockPos pos, BlockState state) {
         super(ModBlockRegistry.STARBY_TILE.get(), pos, state);
@@ -28,11 +29,9 @@ public class StarbuncleWheelTile extends GeneratingKineticBlockEntity implements
     public float getGeneratedSpeed() {
         int spd = CreoConfig.WHEEL_BASE_SPEED.get();
         Direction direction = getBlockState().getValue(StarbuncleWheelBlock.FACING);
-        if(direction != Direction.UP && direction != Direction.DOWN) {
-            if (level.getBlockState(getBlockPos().relative(direction.getClockWise())).is(Tags.Blocks.STORAGE_BLOCKS_GOLD)) {
+        if(direction != Direction.UP && direction != Direction.DOWN)
+            if (level.getBlockState(getBlockPos().relative(direction.getClockWise())).is(Tags.Blocks.STORAGE_BLOCKS_GOLD))
                 spd = CreoConfig.WHEEL_BONUS_SPEED.get();
-            }
-        }
 
         return convertToDirection(spd, getBlockState().getValue(HandCrankBlock.FACING));
     }
@@ -50,7 +49,7 @@ public class StarbuncleWheelTile extends GeneratingKineticBlockEntity implements
             return PlayState.CONTINUE;
         }));
     }
-    AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;

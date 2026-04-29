@@ -1,6 +1,5 @@
 package com.hollingsworth.ars_creo.common.display;
 
-import com.hollingsworth.arsnouveau.common.block.tile.BasicSpellTurretTile;
 import com.hollingsworth.arsnouveau.common.block.tile.SourceJarTile;
 import com.simibubi.create.api.behaviour.display.DisplaySource;
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
@@ -47,7 +46,7 @@ public class SourceJarDisplaySource extends DisplaySource {
 
     private Stream<List<MutableComponent>> getComponents(DisplayLinkContext context, boolean forFlapDisplay) {
         BlockEntity sourceBE = context.getSourceBlockEntity();
-        if(!(sourceBE instanceof SourceJarTile turretTile))
+        if (!(sourceBE instanceof SourceJarTile turretTile))
             return Stream.empty();
 
         return Stream.of(List.of(

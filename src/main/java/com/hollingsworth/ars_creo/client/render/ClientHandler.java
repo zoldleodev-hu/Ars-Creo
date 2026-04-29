@@ -17,7 +17,7 @@ public class ClientHandler {
         ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.STARBY_WHEEL.get(), RenderType.cutout());
     }
     @SubscribeEvent
-    public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event){
+    public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockRegistry.STARBY_TILE.get(), StarbuncleWheelRenderer::new);
     }
 }

@@ -22,7 +22,6 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 
 public interface ITurretBehavior {
-
     default void castSpell(MovementContext context, BlockPos pos){
         ServerLevel world = (ServerLevel) context.world;
         Position iposition = getDispensePosition(pos, context.state);

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TrainHatMap {
-
     private static Map<EntityType<?>, TrainData> map = new ConcurrentHashMap<>();
 
     static {

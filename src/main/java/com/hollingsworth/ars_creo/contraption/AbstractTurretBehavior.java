@@ -6,6 +6,4 @@ import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 
 public class AbstractTurretBehavior extends MovingInteractionBehaviour implements ITurretBehavior, MovementBehaviour {
 
-
-
 }

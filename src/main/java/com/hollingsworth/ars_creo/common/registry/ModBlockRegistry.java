@@ -19,8 +19,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-
-
 public class ModBlockRegistry {
     public static final DeferredRegister<Block> BLOCK_REG = DeferredRegister.create(BuiltInRegistries.BLOCK, ArsCreo.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_REG = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ArsCreo.MODID);
@@ -37,7 +35,6 @@ public class ModBlockRegistry {
                 return StarbuncleWheelRenderer::getISTER;
             }
         });
-
     }
 
     public static Block.Properties defaultProperties(){

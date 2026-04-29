@@ -47,12 +47,11 @@ public class TurretDisplaySource extends DisplaySource {
 
     private Stream<List<MutableComponent>> getComponents(DisplayLinkContext context, boolean forFlapDisplay) {
         BlockEntity sourceBE = context.getSourceBlockEntity();
-        if(!(sourceBE instanceof BasicSpellTurretTile turretTile))
+        if (!(sourceBE instanceof BasicSpellTurretTile turretTile))
             return Stream.empty();
         Spell spell = turretTile.getCapability(turretTile,null).getSpell();
-        if(spell.isEmpty()) {
+        if (spell.isEmpty())
             return Stream.of(List.of(Component.translatable("ars_creo.display_source.turret.no_spell")));
-        }
 
         return Stream.of(List.of(
            Component.translatable("ars_creo.display_source.turret.spell_name", spell.name())),

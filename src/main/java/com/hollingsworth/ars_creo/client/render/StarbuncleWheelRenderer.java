@@ -13,7 +13,6 @@ import net.minecraft.core.Direction;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
-
 public class StarbuncleWheelRenderer extends GeoBlockRenderer<StarbuncleWheelTile> {
     public static StarbuncleWheelModel wheelModel = new StarbuncleWheelModel();
 

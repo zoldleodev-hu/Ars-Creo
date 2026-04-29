@@ -16,10 +16,10 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
+import org.jetbrains.annotations.NotNull;
 
 public class PacketUpdateJarContraption extends AbstractPacket {
-    public static final Type<PacketUpdateJarContraption> TYPE = new Type(ArsCreo.prefix("update_jar"));
+    public static final Type<PacketUpdateJarContraption> TYPE = new Type<>(ArsCreo.prefix("update_jar"));
     public static final StreamCodec<RegistryFriendlyByteBuf, PacketUpdateJarContraption> CODEC = StreamCodec.ofMember(PacketUpdateJarContraption::toBytes, PacketUpdateJarContraption::new);
 
     public int entityID;
@@ -42,7 +42,7 @@ public class PacketUpdateJarContraption extends AbstractPacket {
     }
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public @NotNull Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

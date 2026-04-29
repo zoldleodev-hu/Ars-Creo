@@ -17,6 +17,5 @@ public class ArsNouveauRegistry {
         DocumentationRegistry.registerEntry(DocumentationRegistry.CRAFTING, new DocEntryBuilder(ArsCreo.MODID, DocumentationRegistry.CRAFTING, AllBlocks.FLUID_TANK.get().asItem())
                         .withName("ars_creo.fluid_tank")
                 .withIntroPage().build());
-
     }
 }

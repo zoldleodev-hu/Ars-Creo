@@ -15,21 +15,18 @@ import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.util.RenderUtil;
 
 public class GeoTrainHatRenderer {
-
-    public static void render(PoseStack poseStack, LivingEntity animatable, GeoBone bone, MultiBufferSource bufferSource, int packedLight){
+    public static void render(PoseStack poseStack, LivingEntity animatable, GeoBone bone, MultiBufferSource bufferSource, int packedLight) {
         TrainHatMap.TrainData data = TrainHatMap.get(animatable.getType());
-        if(data == null)
+        if (data == null)
             return;
-        if(animatable instanceof LivingEntity livingEntity && bone.getName().equals(data.bone())) {
+        if (animatable instanceof LivingEntity livingEntity && bone.getName().equals(data.bone()))
             GeoTrainHatRenderer.render(data.hatScale(), data.hatTranslation(), poseStack, livingEntity, bone, bufferSource, packedLight);
-        }
     }
 
     public static void render(Vector3f hatScale, Vector3f hatTranslation, PoseStack poseStack, LivingEntity animatable, GeoBone bone, MultiBufferSource bufferSource, int packedLight) {
         PartialModel hat = EntityHats.getHatFor(animatable);
-        if (hat == null) {
+        if (hat == null)
             return;
-        }
 
         poseStack.pushPose();
 

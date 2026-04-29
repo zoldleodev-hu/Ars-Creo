@@ -8,7 +8,6 @@ import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 
 
 public class SourceJarBehavior implements MovementBehaviour {
-
     @Override
     public void startMoving(MovementContext context) {
         addIfMissing(context);
@@ -35,11 +34,9 @@ public class SourceJarBehavior implements MovementBehaviour {
         if(context.contraption == null || context.contraption.entity == null || context.world == null || context.world.isClientSide)
             return;
 
-        for(ISpecialSourceProvider specialSourceProvider : SourceManager.INSTANCE.getSetForLevel(context.world)){
-            if(specialSourceProvider instanceof ContraptionSourceProvider contraptionSourceProvider && contraptionSourceProvider.contraption.entity == context.contraption.entity){
+        for(ISpecialSourceProvider specialSourceProvider : SourceManager.INSTANCE.getSetForLevel(context.world))
+            if(specialSourceProvider instanceof ContraptionSourceProvider contraptionSourceProvider && contraptionSourceProvider.contraption.entity == context.contraption.entity)
                 return;
-            }
-        }
         SourceManager.INSTANCE.addInterface(context.world, new ContraptionSourceProvider(context.contraption));
     }
 }

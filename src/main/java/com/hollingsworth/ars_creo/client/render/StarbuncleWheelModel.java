@@ -15,16 +15,14 @@ import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.GeoModel;
 
 public class StarbuncleWheelModel extends GeoModel<StarbuncleWheelTile> {
-
     @Override
     public void setCustomAnimations(StarbuncleWheelTile entity, long uniqueID, AnimationState<StarbuncleWheelTile> customPredicate) {
         super.setCustomAnimations(entity, uniqueID, customPredicate);
         GeoBone head = this.getAnimationProcessor().getBone("wheel");
         Direction facing = entity.getBlockState().getValue(StarbuncleWheelBlock.FACING);
         float angle = getAngleForTe(entity, entity.getBlockPos(), ModBlockRegistry.STARBY_WHEEL.get().getRotationAxis(entity.getBlockState()));
-        if(facing ==  Direction.SOUTH || facing == Direction.EAST) {
+        if (facing == Direction.SOUTH || facing == Direction.EAST)
             angle = -angle;
-        }
         head.setRotY(angle);
     }
 
@@ -33,15 +31,16 @@ public class StarbuncleWheelModel extends GeoModel<StarbuncleWheelTile> {
         float offset = getRotationOffsetForPosition(te, pos, axis);
         return ((time * te.getSpeed() * 3f / 10 + offset) % 360) / 180 * (float) Math.PI;
     }
+
     protected static float getRotationOffsetForPosition(KineticBlockEntity te, final BlockPos pos, final Direction.Axis axis) {
         float offset = ICogWheel.isLargeCog(te.getBlockState()) ? 11.25f : 0;
         double d = (((axis == Direction.Axis.X) ? 0 : pos.getX()) + ((axis == Direction.Axis.Y) ? 0 : pos.getY())
                 + ((axis == Direction.Axis.Z) ? 0 : pos.getZ())) % 2;
-        if (d == 0) {
+        if (d == 0)
             offset = 22.5f;
-        }
         return offset;
     }
+
     static final ResourceLocation model = ResourceLocation.fromNamespaceAndPath(ArsCreo.MODID, "geo/starbuncle_wheel.geo.json");
     static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(ArsCreo.MODID, "textures/block/starbuncle_wheel.png");
     static final ResourceLocation animations = ResourceLocation.fromNamespaceAndPath(ArsCreo.MODID, "animations/starbuncle_wheel_animation.json");

@@ -17,10 +17,13 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class ACNetworking {
-
     private static int ID = 0;
-    public static int nextID(){return ID++;}
-    public static void register(final RegisterPayloadHandlersEvent event){
+
+    public static int nextID() {
+        return ID++;
+    }
+
+    public static void register(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar reg = event.registrar("1");
         reg.playToClient(PacketUpdateJarContraption.TYPE, PacketUpdateJarContraption.CODEC, ACNetworking::handle);
     }
