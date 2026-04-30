@@ -24,7 +24,7 @@ public class SourceJarDisplaySource extends DisplaySource {
         boolean isBook = context.getTargetBlockEntity() instanceof LecternBlockEntity;
 
         if (isBook) {
-            Stream<MutableComponent> componentList = getComponents(context, false).map(components -> {
+            Stream<MutableComponent> componentList = getComponents(context).map(components -> {
                 Optional<MutableComponent> reduce = components.stream()
                         .reduce(MutableComponent::append);
                 return reduce.orElse(EMPTY_LINE);
@@ -35,7 +35,7 @@ public class SourceJarDisplaySource extends DisplaySource {
                     .orElse(EMPTY_LINE));
         }
 
-        return getComponents(context, false).map(components -> {
+        return getComponents(context).map(components -> {
                     Optional<MutableComponent> reduce = components.stream()
                             .reduce(MutableComponent::append);
                     return reduce.orElse(EMPTY_LINE);
@@ -44,7 +44,7 @@ public class SourceJarDisplaySource extends DisplaySource {
 
     }
 
-    private Stream<List<MutableComponent>> getComponents(DisplayLinkContext context, boolean forFlapDisplay) {
+    private Stream<List<MutableComponent>> getComponents(DisplayLinkContext context) {
         BlockEntity sourceBE = context.getSourceBlockEntity();
         if (!(sourceBE instanceof SourceJarTile turretTile))
             return Stream.empty();

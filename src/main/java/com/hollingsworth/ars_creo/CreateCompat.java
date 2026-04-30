@@ -1,6 +1,7 @@
 package com.hollingsworth.ars_creo;
 
 
+import com.hollingsworth.ars_creo.api.RegisterDisplayBehaviourEvent;
 import com.hollingsworth.ars_creo.api.RegisterMovementBehaviourEvent;
 import com.hollingsworth.ars_creo.common.display.SourceJarDisplaySource;
 import com.hollingsworth.ars_creo.common.display.TurretDisplaySource;
@@ -16,7 +17,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreateCompat {
@@ -39,8 +39,8 @@ public class CreateCompat {
     }
 
     public static void setupDisplayBehaviors(){
-        List<DisplaySource> turretSource = new ArrayList<>();
-        turretSource.add(TURRET_DISPLAY_SOURCE.get());
+        List<DisplaySource> turretSource = List.of(TURRET_DISPLAY_SOURCE.get());
+        List<DisplaySource> jarSource = List.of(JAR_DISPLAY_SOURCE.get());
 
         DisplaySource.BY_BLOCK.register(BlockRegistry.BASIC_SPELL_TURRET.get(), turretSource);
         DisplaySource.BY_BLOCK.register(BlockRegistry.TIMER_SPELL_TURRET.get(), turretSource);
@@ -52,7 +52,11 @@ public class CreateCompat {
         DisplaySource.BY_BLOCK_ENTITY.register(BlockRegistry.TIMER_SPELL_TURRET_TILE.get(), turretSource);
         DisplaySource.BY_BLOCK_ENTITY.register(BlockRegistry.ROTATING_TURRET_TILE.get(), turretSource);
 
-        DisplaySource.BY_BLOCK.register(BlockRegistry.SOURCE_JAR.get(), List.of(JAR_DISPLAY_SOURCE.get()));
-        DisplaySource.BY_BLOCK_ENTITY.register(BlockRegistry.SOURCE_JAR_TILE.get(), List.of(JAR_DISPLAY_SOURCE.get()));
+        NeoForge.EVENT_BUS.post(new RegisterDisplayBehaviourEvent.Turret(turretSource));
+
+        DisplaySource.BY_BLOCK.register(BlockRegistry.SOURCE_JAR.get(), jarSource);
+        DisplaySource.BY_BLOCK_ENTITY.register(BlockRegistry.SOURCE_JAR_TILE.get(), jarSource);
+
+        NeoForge.EVENT_BUS.post(new RegisterDisplayBehaviourEvent.SourceJar(jarSource));
     }
 }

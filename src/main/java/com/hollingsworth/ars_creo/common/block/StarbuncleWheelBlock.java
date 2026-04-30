@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +32,7 @@ public class StarbuncleWheelBlock extends DirectionalKineticBlock implements IBE
         Player player = context.getPlayer();
 
         BlockState placedOn = world.getBlockState(pos.relative(face.getOpposite()));
-        if(placedOn.is(ModBlockRegistry.STARBY_WHEEL.get()))
+        if (placedOn.is(ModBlockRegistry.STARBY_WHEEL.get()))
             return defaultBlockState().setValue(FACING, placedOn.getValue(FACING));
 
         boolean sneaking = player != null && player.isShiftKeyDown();
@@ -43,10 +42,10 @@ public class StarbuncleWheelBlock extends DirectionalKineticBlock implements IBE
 
     private void updateWheelSpeed(LevelAccessor world, BlockPos pos) {
         withBlockEntityDo(world, pos, StarbuncleWheelTile::updateGeneratedRotation);
-        withBlockEntityDo(world, pos, BlockEntity::setChanged);
+        withBlockEntityDo(world, pos, StarbuncleWheelTile::setChanged);
     }
 
-    public void updateAllSides(BlockState state, Level worldIn, BlockPos pos) {
+    public void updateAllSides(Level worldIn, BlockPos pos) {
         updateWheelSpeed(worldIn, pos);
     }
 
@@ -56,6 +55,7 @@ public class StarbuncleWheelBlock extends DirectionalKineticBlock implements IBE
         if (worldIn instanceof WrappedLevel)
             return stateIn;
 
+        withBlockEntityDo(worldIn, currentPos, StarbuncleWheelTile::findGoldBlock);
         updateWheelSpeed(worldIn, currentPos);
         return stateIn;
     }
@@ -63,9 +63,8 @@ public class StarbuncleWheelBlock extends DirectionalKineticBlock implements IBE
     @Override
     public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, worldIn, pos, oldState, isMoving);
-        updateAllSides(state, worldIn, pos);
+        updateAllSides(worldIn, pos);
     }
-
 
     @Override
     public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {

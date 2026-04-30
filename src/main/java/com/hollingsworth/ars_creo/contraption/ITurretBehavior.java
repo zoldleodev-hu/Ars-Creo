@@ -42,7 +42,7 @@ public interface ITurretBehavior {
         }
         if (resolver.castType instanceof MethodProjectile) {
             spellCaster.playSound(pos, world, null, spellCaster.getCurrentSound(), SoundSource.BLOCKS);
-            this.shootProjectile(world, pos, resolver, context.state, context);
+            this.shootProjectile(world, pos, resolver, context);
         } else {
             if (resolver.castType instanceof MethodTouch) {
                 BlockPos touchPos = BlockPos.containing(iposition.x(), iposition.y(), iposition.z());
@@ -60,7 +60,7 @@ public interface ITurretBehavior {
         }
     }
 
-    default void shootProjectile(ServerLevel world, BlockPos pos, SpellResolver resolver, BlockState state, MovementContext context) {
+    default void shootProjectile(ServerLevel world, BlockPos pos, SpellResolver resolver, MovementContext context) {
         Vec3 facingVec = Vec3.atLowerCornerOf(context.state.getValue(BasicSpellTurret.FACING).getNormal());
         facingVec = context.rotation.apply(facingVec);
         facingVec.normalize();
@@ -76,10 +76,6 @@ public interface ITurretBehavior {
         spell.setPos(x,y,z);
         spell.shoot(effectiveMovementVec.x, effectiveMovementVec.y, effectiveMovementVec.z, 0.4f, 0);
         world.addFreshEntity(spell);
-    }
-
-    default Direction getClosestFacingDirection(Vec3 exactFacing) {
-        return Direction.getNearest(exactFacing.x, exactFacing.y, exactFacing.z);
     }
 
     default Position getDispensePosition(BlockPos pos, BlockState state) {
