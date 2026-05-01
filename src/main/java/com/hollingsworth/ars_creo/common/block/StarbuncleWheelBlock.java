@@ -15,10 +15,11 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class StarbuncleWheelBlock extends DirectionalKineticBlock implements IBE<StarbuncleWheelTile> {
-    public StarbuncleWheelBlock(Properties p_i48440_1_) {
-        super(p_i48440_1_);
+    public StarbuncleWheelBlock(Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
@@ -31,29 +32,23 @@ public class StarbuncleWheelBlock extends DirectionalKineticBlock implements IBE
         Player player = context.getPlayer();
 
         BlockState placedOn = world.getBlockState(pos.relative(face.getOpposite()));
-        if(placedOn.is(ModBlockRegistry.STARBY_WHEEL.get())){
+        if (placedOn.is(ModBlockRegistry.STARBY_WHEEL.get()))
             return defaultBlockState().setValue(FACING, placedOn.getValue(FACING));
-        }
 
-        Direction facing = face;
         boolean sneaking = player != null && player.isShiftKeyDown();
-        facing = horizontalFacing;
 
-        return defaultBlockState().setValue(FACING, sneaking ? facing.getOpposite() : facing);
+        return defaultBlockState().setValue(FACING, sneaking ? horizontalFacing.getOpposite() : horizontalFacing);
     }
 
     private void updateWheelSpeed(LevelAccessor world, BlockPos pos) {
+        withBlockEntityDo(world, pos, StarbuncleWheelTile::findGoldBlock);
         withBlockEntityDo(world, pos, StarbuncleWheelTile::updateGeneratedRotation);
-        withBlockEntityDo(world, pos, (te) -> te.setChanged());
-    }
-
-    public void updateAllSides(BlockState state, Level worldIn, BlockPos pos) {
-        updateWheelSpeed(worldIn, pos);
+        withBlockEntityDo(world, pos, StarbuncleWheelTile::setChanged);
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
-                                  BlockPos currentPos, BlockPos facingPos) {
+    public @NotNull BlockState updateShape(@NotNull BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor worldIn,
+                                           @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
         if (worldIn instanceof WrappedLevel)
             return stateIn;
 
@@ -64,12 +59,10 @@ public class StarbuncleWheelBlock extends DirectionalKineticBlock implements IBE
     @Override
     public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, worldIn, pos, oldState, isMoving);
-        updateAllSides(state, worldIn, pos);
     }
 
-
     @Override
-    public RenderShape getRenderShape(BlockState p_149645_1_) {
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
