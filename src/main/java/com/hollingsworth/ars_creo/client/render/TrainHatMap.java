@@ -13,9 +13,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @OnlyIn(Dist.CLIENT)
 public class TrainHatMap {
-    private static final Map<EntityType<?>, TrainData> map = new ConcurrentHashMap<>();
+    private static final Map<EntityType<?>, TrainData> map;
 
     static {
+        map = new ConcurrentHashMap<>();
         init();
     }
 

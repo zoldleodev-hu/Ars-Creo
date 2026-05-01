@@ -5,10 +5,8 @@ import com.hollingsworth.ars_creo.common.registry.ModBlockRegistry;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.Tags;
-import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -39,9 +37,10 @@ public class StarbuncleWheelTile extends GeneratingKineticBlockEntity implements
     }
 
     @Override
-    public void setLevel(@NotNull Level level) {
-        super.setLevel(level);
+    public void onLoad() {
+        super.onLoad();
         findGoldBlock();
+        updateGeneratedRotation();
     }
 
     @Override
