@@ -18,7 +18,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class StarbuncleWheelTile extends GeneratingKineticBlockEntity implements GeoBlockEntity {
     @SuppressWarnings("all")
     private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    protected boolean hasGoldBlock = false;
+    protected float generatedSpeed = 0;
 
     public StarbuncleWheelTile(BlockPos pos, BlockState state) {
         super(ModBlockRegistry.STARBY_TILE.get(), pos, state);
@@ -26,14 +26,14 @@ public class StarbuncleWheelTile extends GeneratingKineticBlockEntity implements
 
     public void findGoldBlock() {
         Direction direction = getBlockState().getValue(StarbuncleWheelBlock.FACING);
-        hasGoldBlock = direction != Direction.UP && direction != Direction.DOWN && level != null &&
-                level.getBlockState(getBlockPos().relative(direction.getClockWise())).is(Tags.Blocks.STORAGE_BLOCKS_GOLD);
+        generatedSpeed = direction != Direction.UP && direction != Direction.DOWN && level != null &&
+                level.getBlockState(getBlockPos().relative(direction.getClockWise())).is(Tags.Blocks.STORAGE_BLOCKS_GOLD)
+                ? CreoConfig.WHEEL_BONUS_SPEED.get() : CreoConfig.WHEEL_BASE_SPEED.get();
     }
 
     @Override
     public float getGeneratedSpeed() {
-        int speed = hasGoldBlock ? CreoConfig.WHEEL_BONUS_SPEED.get() : CreoConfig.WHEEL_BASE_SPEED.get();
-        return convertToDirection(speed, getBlockState().getValue(StarbuncleWheelBlock.FACING));
+        return convertToDirection(generatedSpeed, getBlockState().getValue(StarbuncleWheelBlock.FACING));
     }
 
     @Override
