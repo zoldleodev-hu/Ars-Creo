@@ -3,7 +3,6 @@ package com.hollingsworth.ars_creo.common.block;
 import com.hollingsworth.ars_creo.CreoConfig;
 import com.hollingsworth.ars_creo.common.registry.ModBlockRegistry;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
-import com.simibubi.create.content.kinetics.crank.HandCrankBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,31 +15,32 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-
 public class StarbuncleWheelTile extends GeneratingKineticBlockEntity implements GeoBlockEntity {
+    @SuppressWarnings("all")
+    private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    protected float generatedSpeed = 0;
 
     public StarbuncleWheelTile(BlockPos pos, BlockState state) {
         super(ModBlockRegistry.STARBY_TILE.get(), pos, state);
-        setLazyTickRate(20);
+    }
+
+    public void findGoldBlock() {
+        Direction direction = getBlockState().getValue(StarbuncleWheelBlock.FACING);
+        generatedSpeed = direction != Direction.UP && direction != Direction.DOWN && level != null &&
+                level.getBlockState(getBlockPos().relative(direction.getClockWise())).is(Tags.Blocks.STORAGE_BLOCKS_GOLD)
+                ? CreoConfig.WHEEL_BONUS_SPEED.get() : CreoConfig.WHEEL_BASE_SPEED.get();
     }
 
     @Override
     public float getGeneratedSpeed() {
-        int spd = CreoConfig.WHEEL_BASE_SPEED.get();
-        Direction direction = getBlockState().getValue(StarbuncleWheelBlock.FACING);
-        if(direction != Direction.UP && direction != Direction.DOWN) {
-            if (level.getBlockState(getBlockPos().relative(direction.getClockWise())).is(Tags.Blocks.STORAGE_BLOCKS_GOLD)) {
-                spd = CreoConfig.WHEEL_BONUS_SPEED.get();
-            }
-        }
-
-        return convertToDirection(spd, getBlockState().getValue(HandCrankBlock.FACING));
+        return convertToDirection(generatedSpeed, getBlockState().getValue(StarbuncleWheelBlock.FACING));
     }
 
     @Override
-    public void lazyTick() {
-        super.lazyTick();
-        ModBlockRegistry.STARBY_WHEEL.get().updateAllSides(getBlockState(), level, worldPosition);
+    public void onLoad() {
+        super.onLoad();
+        findGoldBlock();
+        updateGeneratedRotation();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class StarbuncleWheelTile extends GeneratingKineticBlockEntity implements
             return PlayState.CONTINUE;
         }));
     }
-    AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
